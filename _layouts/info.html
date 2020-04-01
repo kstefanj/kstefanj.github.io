@@ -1,0 +1,15 @@
+---
+layout: default
+---
+{%- if page.title -%}
+  <ul class="posts">
+    <li>
+      <h1 id="posts-label">{{ page.title }}</h1>
+    </li>
+  </ul>
+{%- endif -%}  
+<div class="post-container">
+    <div class="post">
+        {{ content }}
+    </div>
+</div>
