@@ -51,6 +51,8 @@ plainwhite:
 
   sitemap: true
 
+  analytics_id: "UA-163735643-1"
+
 show_excerpts: true
 
 include: favicon.ico
