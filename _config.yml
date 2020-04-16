@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Stefan Johansson | Blog 
+title: Stefan Johansson's Blog 
 email: stefan.johansson@oracle.com
 description: >- # this means to ignore newlines until "baseurl:"
   A blog about Garbage Collection, OpenJDK and Java.
@@ -56,6 +56,11 @@ plainwhite:
 show_excerpts: true
 
 include: favicon.ico
+
+# Twitter cards
+twitter:
+  username: kstefanj
+  card: summary
 
 # Exclude from processing.
 # The following items will not be processed, by default.
