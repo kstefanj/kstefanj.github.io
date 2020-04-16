@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: info
 title: Whoami
 ---
 ![me]({{ site.baseurl }}/assets/whoami_round.png "Me, myself and I"){: class="right_30" }
