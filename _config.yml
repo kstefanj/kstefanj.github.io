@@ -23,7 +23,7 @@ email: stefan.johansson@oracle.com
 description: >- # this means to ignore newlines until "baseurl:"
   A blog about Garbage Collection, OpenJDK and Java.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://kstefanj.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 remote_theme: thelehhman/plainwhite-jekyll
