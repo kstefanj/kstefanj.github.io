@@ -57,11 +57,6 @@ show_excerpts: true
 
 include: favicon.ico
 
-# Twitter cards
-twitter:
-  username: kstefanj
-  card: summary
-
 logo: /assets/portfolio.png
 
 # Exclude from processing.
