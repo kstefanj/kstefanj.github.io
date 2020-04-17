@@ -16,9 +16,9 @@
 {% endif %}
 {% if page.image %}
 <meta name="twitter:card"  content="summary_large_image">
-<meta name="twitter:image" content="{{ page.image }}">
+<meta name="twitter:image" content="{{ site.url }}{{ page.image }}">
 {% else %}
 <meta name="twitter:card"  content="summary">
-<meta name="twitter:image" content="{{ site.logo }}">
+<meta name="twitter:image" content="{{ site.url }}{{ site.logo }}">
 {% endif %}
 <!-- end of Twitter cards -->
