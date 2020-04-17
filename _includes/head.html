@@ -1,0 +1,24 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="https://fonts.googleapis.com/css?family=Merriweather:300|Raleway:400,700" rel="stylesheet">
+<link rel="stylesheet" href="{{ "/assets/css/style.css" }}">
+<title>{{ page.title }}</title>
+{% seo %}
+<!-- Twitter cards -->
+<meta name="twitter:site"    content="@{{ site.plainwhite.social_links.twitter }}">
+<meta name="twitter:creator" content="@{{ page.author }}">
+<meta name="twitter:title"   content="{{ page.title }}">
+{% if page.summary %}
+<meta name="twitter:description" content="{{ page.summary }}">
+{% else %}
+<meta name="twitter:description" content="{{ page.excerpt | strip_html }}">
+{% endif %}
+{% if page.image %}
+<meta name="twitter:card"  content="summary_large_image">
+<meta name="twitter:image" content="{{ page.image }}">
+{% else %}
+<meta name="twitter:card"  content="summary">
+<meta name="twitter:image" content="{{ site.logo }}">
+{% endif %}
+<!-- end of Twitter cards -->
