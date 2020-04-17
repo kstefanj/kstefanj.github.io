@@ -32,11 +32,11 @@ The expectation was that the results would be a bit worse than with a fixed heap
 
 These results are worse than expected and analyzing the GC logs showed one clear difference between running with a fixed heap and not. The heap region sizes was different. Apart from doing work concurrently, another important feature in G1 is to divide the heap into multiple regions of a fixed size. G1 can collect these regions individually and this enables G1 to avoid costly full collections. In this case, a somewhat restrictive calculation of the region size and a characteristic of the benchmark had the opposite effect.
 
-The size of the regions are determined at startup and the default calculation take both the initial and maximum heap size into consideration. The effect is that out of the box a 1 MB region size will be used, while for the fixed heap case the region size will be 2 MB. It might sound like a small difference, but the benchmark uses a significant amount of large objects that need special treatment when using 1 MB regions. This special treatment leads to a lot of memory that can’t be used, which in turn leads full collections and a poor overall experience.
+The size of the regions is determined at startup and the default calculation takes both the initial and maximum heap size into consideration. The effect is that out of the box a 1 MB region size will be used, while for the fixed heap case the region size will be 2 MB. It might sound like a small difference, but the benchmark uses a significant amount of large objects that need special treatment when using 1 MB regions. This special treatment leads to a lot of memory that can’t be used, which in turn leads full collections and a poor overall experience.
 
 We decided to address this problem right away and a change to improve the behavior has already been **pushed to JDK 15** ([JDK-8241670](https://hg.openjdk.java.net/jdk/jdk/rev/a54ff90a3015)). The basic idea is to aim for a larger region size by default and this is achieved by:
 
--   only consider max heap size when determining region size
+-   only considering max heap size when determining region size
 -   rounding up the region size to the nearest power of 2 instead of rounding down
 
 This is how the performance looks after this change.
