@@ -32,6 +32,7 @@ plugins:
   - jekyll-redirect-from
 
 plainwhite:
+  portfolio_image: assets/portfolio.png
   name: Stefan Johansson
   tagline: |
    Garbage Collection,
