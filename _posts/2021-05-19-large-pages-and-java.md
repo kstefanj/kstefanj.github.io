@@ -91,7 +91,7 @@ Until recently there was a [bug](https://bugs.openjdk.java.net/browse/JDK-826648
 
 ## Checking the JVM
 
-Once your environment is properly configured and you've enabled Java to run with large pages, it is **good to verify** that the JVM really makes use of large pages. You can of course use your favorite OS tool to check this, but the JVM also has a few **logging options** to help with this. To see some basic GC configuration you can run with `-Xlog:gc+init`. With G1 this you get this output:
+Once your environment is properly configured and you've enabled Java to run with large pages, it is **good to verify** that the JVM really makes use of large pages. You can of course use your favorite OS tool to check this, but the JVM also has a few **logging options** to help with this. To see some basic GC configuration you can run with `-Xlog:gc+init`. With G1 you get this output:
 ```
 > jdk-16/bin/java -Xlog:gc+init -XX:+UseLargePages -Xmx4g -version
 [0.029s][info][gc,init] Version: 16+36-2231 (release)
