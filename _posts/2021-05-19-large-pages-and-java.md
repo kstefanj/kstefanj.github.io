@@ -87,7 +87,7 @@ On Windows the configuration step is a bit easier, at least on newer versions. T
 
 Once this permission is granted the JVM will be able to use large pages if run with `-XX:+UseLargePages`. The JVMs large pages implementation on Windows works very similar to HugeTLB pages on Linux. The whole reservation backed by large pages is committed up front to ensure we don't get any failures later on.
 
-Until recently there was a [bug](https://bugs.openjdk.java.net/browse/JDK-8266489) preventing G1, the default GC, to make use of large pages for heaps larger than 4 GB on Windows. This is now fixed and going forward running big **Minecraft servers** with **G1** should be able to get a nice **boast by enabling large pages**.
+Until recently there was a [bug](https://bugs.openjdk.java.net/browse/JDK-8266489) preventing G1, the default GC, to make use of large pages for heaps larger than 4 GB on Windows. This is now fixed and going forward running big **Minecraft servers** with **G1** should be able to get a nice **boost by enabling large pages**.
 
 ## Checking the JVM
 
