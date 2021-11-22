@@ -30,6 +30,7 @@ remote_theme: thelehhman/plainwhite-jekyll
 plugins:
   - jekyll-feed
   - jekyll-redirect-from
+  - jekyll-seo-tag
 
 plainwhite:
   portfolio_image: assets/portfolio.png
