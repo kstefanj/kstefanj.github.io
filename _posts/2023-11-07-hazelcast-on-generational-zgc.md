@@ -5,7 +5,7 @@ date:   2023-11-07 03:00:01 +0200
 tags: [Performance, Java, GC, ZGC]
 ---
 
-A few years ago the developers of [Hazelcast Jet](https://jet-start.sh/) decided to try out the different GC alternatives available at the time. The result was this [blog-series](https://jet-start.sh/blog/2020/06/09/jdk-gc-benchmarks-part1) and the results for ZGC looked very promising. Now, more three years later, ZGC has become [production ready](https://openjdk.java.net/jeps/377) and both [concurrent stack scanning](https://openjdk.org/jeps/376) and [generational support](https://openjdk.org/jeps/439) have been added making it even more suitable for low latency workloads. In this post we look at one of the Hazelcast Jet experiments and see how Generational ZGC performs.
+A few years ago the developers of [Hazelcast Jet](https://jet-start.sh/) decided to try out the different GC alternatives available at the time. The result was this [blog-series](https://jet-start.sh/blog/2020/06/09/jdk-gc-benchmarks-part1) from 2020 and the results for ZGC looked very promising. Three years have passed since then and a lot more work has gone into ZGC. It became [production ready](https://openjdk.java.net/jeps/377) in JDK 15, [concurrent stack scanning](https://openjdk.org/jeps/376) was added in JDK 16 and now, in JDK 21, [generational support](https://openjdk.org/jeps/439) has been added making it even more suitable for low latency workloads. In this post we look at one of the Hazelcast Jet experiments and see how Generational ZGC performs.
 
 ## Generational ZGC
 
@@ -15,7 +15,7 @@ A few years ago the developers of [Hazelcast Jet](https://jet-start.sh/) decided
 
 This comes with the benefit of being able to collect the young generation more frequent, expecting most of the objects to be considered garbage (see [the weak generational hypothesis](https://docs.oracle.com/en/java/javase/21/gctuning/garbage-collector-implementation.html#GUID-71D796B3-CBAB-4D80-B5C3-2620E45F6E5D)). When most objects are garbage the cost of doing a collection goes down. This means that Generational ZGC can do more frequent GCs, **reclaiming more memory** still using **less resources** compared to legacy ZGC (the non-generational version).
 
-Adding generations to ZGC was a very large feature that has been in development for over two years and if you want more detailed information about it I recommend reading [the JEP](https://openjdk.org/jeps/439) and watching [this video from JVMLS](https://inside.java/2023/08/31/generational-zgc-and-beyond/).
+Adding generations to ZGC was a very large feature that has been in development for over three years and if you want more detailed information about it I recommend reading [the JEP](https://openjdk.org/jeps/439) and watching [this video from JVMLS](https://inside.java/2023/08/31/generational-zgc-and-beyond/).
 
 ## The use-case
 
