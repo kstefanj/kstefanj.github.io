@@ -21,17 +21,17 @@ Adding generations to ZGC was a very large feature that has been in development 
 
 Hazelcast Jet is an "in-memory, distributed batch and stream processing engine"[^1]. In the mentioned blog-series there were a few different experiments with different setups and benchmarks. The one I re-created is from [part 3](https://jet-start.sh/blog/2020/06/23/jdk-gc-benchmarks-rematch) and focuses on higher percentile latencies over different levels of throughput.
 
-I'm not running on the same kind of hardware as the old experiments, so comparing the new result to the old will not be possible. That said, the legacy ZGC results with JDK 21 show a lot of resemblance with the old results. I've also modified the benchmark a slightly to fit our benchmarking environment as well as added some instrumentation to it. But none of that affects the results. The benchmark still runs on a **single node**, with a **fixed event rate** and the **throughput/allocation rate is varied** by using different sizes on the key-set.
+I'm not running on the same kind of hardware as the old experiments, so comparing the new result to the old will not be possible. That said, the legacy ZGC results with JDK 21 show a lot of resemblance with the old results. I've also modified the benchmark slightly to fit our benchmarking environment as well as added some instrumentation to it. But none of that affects the results. The benchmark still runs on a **single node**, with a **fixed event rate** and the **throughput/allocation rate is varied** by using different sizes on the key-set.
 
 ## The results
 
-To refresh our minds, back in the JDK 14 time-frame, when the original experiments where done, ZGC was looking great up until a certain point. There the allocation rate became to high and we started seeing longer and longer worse case latencies. Let's see how generations can change this picture.
+To refresh our minds, back in the JDK 14 time-frame, when the original experiments were done, ZGC was looking great up until a certain point. There the allocation rate became too high and we started seeing longer and longer worse case latencies. Let's see how generations can change this picture.
 
 ![JDK 21]({{ site.baseurl }}/assets/posts/hazelcast/p9999-event-latency.png){: class="center_85" }
 
 Very similar to the old runs, single generational ZGC performs very well under low load, but as the allocation pressure increases so does the worse case latencies. With **Generational ZGC** this is no longer the case. Even at a **high load** the **p99.99th latency is very low**.
 
-The big reason for this improvement is that with Generational ZGC we don't have to relocate (copy live objects) as much data as with legacy ZGC, because not the whole heap is processed a every GC. So why does this affect the latencies? With a fully concurrent garbage collector the application threads might have to help out doing relocation work and that in turn will lead to application level latencies. So for once it is not the GC pauses that are the reason for application level latencies.
+The big reason for this improvement in latency is that application threads are more frequently available to handle user requests when using Generational ZGC. ZGC is a fully concurrent collector, which means that application threads sometimes have to help ZGC by relocating objects. This happens if ZGC's own threads haven’t finished relocating an object before the application needs to use it. (The work of relocation is invisible to the code of the application.) Legacy ZGC's threads have to process the entire heap, so application threads have to help out quite frequently, doing relocation work instead of "real" work. In contrast, most of the time, Generational ZGC's threads only have to process part of the heap, *the young generation*, so fewer objects need to be relocated and there is less chance of having application threads helping out with relocation.
 
 If you want a more detailed explanation why Generational ZGC is getting so much better results compared to legacy ZGC, you can check out my [P99conf presentation](https://inside.java/2023/10/21/reducing-p99-latencies-with-genzgc/). In it I use the instrumented Hazelcast Jet benchmark to better understand where the differences lie and why it affects performance so much.
 
@@ -41,7 +41,7 @@ Hopefully this short post has made you eager to **try out Generational ZGC**. Ju
 
 > `-XX:+UseZGC -XX:+ZGenerational`
 
- The second flag is important right now to turn on the generational version of ZGC. The long-term goal is to only have the generational version of ZGC and to get there we like to **get user feedback**. If you have a use-case where Generational ZGC is not performing as well legacy ZGC please let us know using [this OpenJDK mailing list](https://mail.openjdk.org/mailman/listinfo/hotspot-gc-use).
+ The second flag is important right now to turn on the generational version of ZGC. The long-term goal is to only have the generational version of ZGC and to get there we like to **get user feedback**. If you have a use-case where Generational ZGC is not performing as well as legacy ZGC please let us know using [this OpenJDK mailing list](https://mail.openjdk.org/mailman/listinfo/hotspot-gc-use).
 
 
 For other general news and insights from the Java team at Oracle make sure to check out [inside.java](https://inside.java/).
